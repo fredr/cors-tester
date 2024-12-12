@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.5.7",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^2.1.8"
   },
   "dependencies": {
     "encore.dev": "^1.45.1"
