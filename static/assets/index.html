@@ -6,6 +6,99 @@
   <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
-<h1>Static Serving from Encore.ts</h1>
+  <h1>CORS Test Tool</h1>
+
+  <form id="corsTestForm">
+    <div class="form-group">
+      <label for="urlInput">URL to test:</label>
+      <input type="url" id="urlInput" name="url" required placeholder="https://api.example.com">
+    </div>
+
+    <div class="form-group">
+      <label for="methodSelect">HTTP Method:</label>
+      <select id="methodSelect" name="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+        <option value="OPTIONS">OPTIONS</option>
+        <option value="HEAD">HEAD</option>
+        <option value="PATCH">PATCH</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Custom Headers:</label>
+      <div id="headersContainer">
+        <div class="headerInput">
+          <input type="text" placeholder="Header Name">
+          <input type="text" placeholder="Header Value">
+          <button type="button" class="remove-header" onclick="removeHeader(this)">Remove</button>
+        </div>
+      </div>
+      <button type="button" onclick="addHeader()">Add Header</button>
+    </div>
+
+    <button type="submit">Send Request</button>
+  </form>
+
+  <div id="responseOutput"></div>
+
+  <script>
+    document.getElementById('corsTestForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const url = document.getElementById('urlInput').value;
+      const method = document.getElementById('methodSelect').value;
+      const headers = {};
+      document.querySelectorAll('#headersContainer .headerInput').forEach(headerInput => {
+        const name = headerInput.querySelector('input[type="text"]:first-child').value;
+        const value = headerInput.querySelector('input[type="text"]:nth-child(2)').value;
+        if (name && value) {
+          headers[name] = value;
+        }
+      });
+
+      document.getElementById('responseOutput').innerHTML = 'Sending request...';
+      
+      fetch(url, { method, headers })
+        .then(async response => {
+          const text = await response.text();
+          const status = response.status;
+          const statusText = response.statusText;
+          const headers = Array.from(response.headers.entries())
+            .map(([key, value]) => `${key}: ${value}`)
+            .join('\n');
+          
+          document.getElementById('responseOutput').innerHTML = `
+            <strong>Status:</strong> ${status} ${statusText}\n
+            <strong>Headers:</strong>\n${headers}\n
+            <strong>Body:</strong>\n${text}
+          `;
+        })
+        .catch(error => {
+          document.getElementById('responseOutput').innerHTML = `
+            <div class="error">
+              <strong>Error:</strong> ${error.message}
+            </div>
+          `;
+        });
+    });
+
+    function addHeader() {
+      const container = document.getElementById('headersContainer');
+      const headerInput = document.createElement('div');
+      headerInput.className = 'headerInput';
+      headerInput.innerHTML = `
+        <input type="text" placeholder="Header Name">
+        <input type="text" placeholder="Header Value">
+        <button type="button" class="remove-header" onclick="removeHeader(this)">Remove</button>
+      `;
+      container.appendChild(headerInput);
+    }
+
+    function removeHeader(button) {
+      button.parentElement.remove();
+    }
+  </script>
 </body>
 </html>
