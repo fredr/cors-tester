@@ -57,15 +57,16 @@ select {
 }
 
 .headerInput {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-  align-items: center;
 }
 
 .headerInput input {
-  margin-bottom: 0;
+  flex: 1;
+  padding: 0.75rem;
+  margin: 0;
 }
 
 button {
@@ -97,14 +98,44 @@ button[type="button"]:hover {
   background-color: #cbd5e1;
 }
 
+.add-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e2e8f0;
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.add-header:hover {
+  background-color: #cbd5e1;
+}
+
+.add-header i {
+  font-size: 0.875rem;
+}
+
 .remove-header {
   background-color: var(--error-color);
   color: white;
-  padding: 0.5rem 1rem;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0;
+  margin: 0;
 }
 
 .remove-header:hover {
   background-color: #b91c1c;
+}
+
+.remove-header i {
+  font-size: 0.875rem;
 }
 
 #responseOutput {
@@ -129,6 +160,17 @@ button[type="button"]:hover {
   }
   
   .headerInput {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0.5rem;
+  }
+  
+  .headerInput input {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+  
+  .remove-header {
+    width: 2.25rem;
+    height: 2.25rem;
   }
 } 
