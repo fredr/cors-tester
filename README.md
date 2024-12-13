@@ -1,4 +1,4 @@
-# CORS Test Tool
+# CORS Tester 🌐
 
 This is an AI-generated CORS (Cross-Origin Resource Sharing) testing tool that helps developers verify and debug CORS configurations.
 
